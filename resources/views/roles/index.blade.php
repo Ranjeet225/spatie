@@ -3,7 +3,9 @@
 @section('content')
 <div class="container">
     <h1>Roles</h1>
+    @can('create-roles')
     <a href="{{ route('roles.create') }}" class="btn btn-primary mb-3">Create Role</a>
+    @endcan
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif

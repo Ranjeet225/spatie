@@ -2,10 +2,12 @@
 
 @section('content')
 <div class="container mt-4">
+    @can('create-products') 
     <div class="d-flex justify-content-between mb-3">
         <h2>Products</h2>
         <a href="{{ route('products.create') }}" class="btn btn-primary">Add Product</a>
     </div>
+    @endcan
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif

@@ -9,9 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('permission:view-users|create-users|edit-users|delete-users', ['only' => ['index','show']]);
+        $this->middleware('permission:create-users', ['only' => ['create','store']]);
+        $this->middleware('permission:edit-users', ['only' => ['edit','update']]);
+        $this->middleware('permission:delete-users', ['only' => ['destroy']]);
+    }
+    
     public function index()
     {
 

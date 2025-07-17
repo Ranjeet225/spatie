@@ -14,6 +14,12 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+    public function __construct()
+    {
+        $this->middleware('permission:view-profile|edit-profile|delete-profile', ['only' => ['edit','update','destroy']]);
+        $this->middleware('permission:edit-profile', ['only' => ['update']]);
+        $this->middleware('permission:delete-profile', ['only' => ['destroy']]);
+    }
     public function edit(Request $request): View
     {
         return view('profile.edit', [

@@ -3,7 +3,9 @@
 @section('content')
 <div class="container">
     <h1>Users</h1>
+    @can('create-users')
     <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Create User</a>
+    @endcan
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -40,11 +42,15 @@
                         <a href="{{ route('users.edit', $user) }}" class="btn btn-warning btn-sm">Edit</a>
                         @endcan
                         @can('delete-users')
-                        <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
-                        </form>
+                            @if($user->roles->contains('name', 'admin'))
+                                <button class="btn btn-danger btn-sm" disabled>Delete</button>
+                            @else
+                                <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                                </form>
+                            @endif
                         @endcan
                     </td>
                 </tr>
